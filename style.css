@@ -1,24 +1,19 @@
 :root {
-  --primary-color: #000000;
-
-  --primary-color-dark: white;
+  --primary-dark-one: #0D0D0D;
+  --primary-dark-two: #737273;
+  --primary-color: #544F59;
+  --primary-light: #BFBDBE;
 
   --gameboard-size: 60vh
 }
 
 @font-face {
   font-family: 'varela_roundregular';
-  src: url('fonts/VarelaRound-Regular-webfont.eot');
-  src: url('fonts/VarelaRound-Regular-webfont.eot?#iefix') format('embedded-opentype'),
-       url('fonts/VarelaRound-Regular-webfont.woff2') format('woff2'),
-       url('fonts/VarelaRound-Regular-webfont.woff') format('woff'),
-       url('fonts/VarelaRound-Regular-webfont.ttf') format('truetype'),
-       url('fonts/VarelaRound-Regular-webfont.svg#varela_roundregular') format('svg');
+  src: url('fonts/VarelaRound-Regular-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 
 }
-
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -69,14 +64,42 @@ body {
 }
 
 .main {
+  height: 100vh;
+  width: 100vw;
+
+  background-color: var(--primary-light);
+
   display: grid;
   grid-template-columns: 1fr var(--gameboard-size) 1fr;
-  grid-template-rows: 150px 1fr auto;
+  grid-template-rows: 100px 150px 1fr auto;
+}
 
+.header {
+  grid-column: 1 / 4;
+
+  background-color: var(--primary-color);
+  color: white;
+
+  font-size: 4rem;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-display {
+  grid-column: 2 / 3;
+
+  font-size: 3rem;
+  color: var(--primary-color);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .game-board {
-  grid-row: 2 / 3;
+  grid-row: 3 / 4;
   grid-column: 2 / 3;
 
   height: var(--gameboard-size);
@@ -84,16 +107,17 @@ body {
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
 
-  border: 2px solid var(--primary-color);
+  border: 2px solid var(--primary-dark-one);
 }
 
 .game-square {
   cursor: pointer;
-  border: 1px solid var(--primary-color);
+  border: 1px solid var(--primary-dark-one);
 
   font-weight: 600;
   font-size: 5em;
   text-align: center;
+  color: var(--primary-dark-one);
 
   display: flex;
   align-items: center;
