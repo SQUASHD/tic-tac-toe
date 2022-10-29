@@ -42,3 +42,26 @@ table {
 	border-spacing: 0;
 }
 
+.main {
+  display: grid;
+  grid-template-columns: 1fr 80vh 1fr;
+  grid-template-rows: 100px 1fr auto;
+
+}
+
+.game-board {
+  grid-row: 2 / 3;
+  grid-column: 2 / 3;
+
+  height: 80vh;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.square {
+  border: 1px solid black;
+  font-size: 5em;
+  text-align: center;
+  cursor: pointer;
+}
