@@ -64,7 +64,6 @@ const displayController = (() => {
 
   const toggleDarkMode = () => {
     darkModeToggled = !darkModeToggled
-    const darkModeButton = document.querySelector(".dark-mode-button");
     const darkToggleableElements = document.querySelectorAll(".dark-mode-toggle");
     darkToggleableElements.forEach((element) => {
       element.classList.toggle("dark");
