@@ -14,6 +14,7 @@ const gameBoard = (() => {
 
   const setBoard = (index, sign) => {
     board[index] = sign;
+    console.log(board)
   }  
 
   const reset = () => {
@@ -46,7 +47,10 @@ const displayController = (() => {
 
   const setMessage = () => {
     let message;
-    if (gameController.getGameOver()) {
+    if (gameController.getWinner() === "draw") {
+      message = "It's a draw!";
+    }
+    else if (gameController.getGameOver()) {
       message = `${gameController.getWinner()} won!`;
       console.log(gameController.getWinner());
     }
@@ -104,14 +108,28 @@ const gameController = (() => {
         gameOver = true;
         winner = currentPlayer.getName();
       }
+      else if (!gameOver && gameController.checkDraw()) {
+        gameOver = true;
+        winner = "draw";
+      }
     });
+  };
+
+  const checkDraw = () => {
+    for (let i = 0; i < 9; i++) {
+      if (gameBoard.getBoard(i) === "") {
+        return false;
+      }
+    }
+    return true;
   };
 
   const getWinner = () => winner 
 
-  return { getGameOver, getCurrentPlayer, playRound, getWinner };
+  return { getGameOver, getCurrentPlayer, playRound, getWinner, checkDraw };
 })();
 
 window.onload = () => {
   displayController.setMessage();
 };
+
