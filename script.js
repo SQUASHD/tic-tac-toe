@@ -1,12 +1,3 @@
-const gameBoard = (() => {
-  // const board = ["", "", "", "", "", "", "", "", ""];
-  const board = [["X", "O", "X"], ["O", "X", "O"], ["X", "O", "X"]];
-  const getBoard = (i,j) => board[i][j];
-  const setBoard = (index, sign) => {
-    board[index] = sign;
-  }
-  return { getBoard, setBoard };
-})();
 
 const Player = (name, playerSign) => {
   const getName = () => name;
@@ -14,20 +5,72 @@ const Player = (name, playerSign) => {
   return { getName, getPlayerSign };
 };
 
-for (let i = 0; i < 3; i++) {
-  for (let j = 0; j < 3; j++) {
-    const square = document.createElement("div");
-    square.classList.add("square");
-    square.setAttribute("square-index", `${i},${j}`);
-    square.textContent = gameBoard.getBoard(i,j);
-    
-    square.addEventListener("click", () => {
-      console.log(square.getAttribute("square-index"));
-    });
-    document.querySelector(".game-board").appendChild(square);
-  }
-}
+const gameBoard = (() => {
+  const board = ["", "", "", "", "", "", "", "", ""];
+  
+  const getBoard = (index) => {
+    return board[index];
+  }  
 
-console.log(gameBoard.getBoard(0,0));
-gameBoard.setBoard((0,0), "O");
-console.log(gameBoard.getBoard(0,0));
+  const setBoard = (index, sign) => {
+    board[index] = sign;
+  }  
+
+  const reset = () => {
+    for (let i = 0; i < board.length; i++) {
+        board[i] = "";
+    }    
+  }
+  
+  const getWholeBoard = () => {
+    return board;
+  }
+
+  return { getBoard, setBoard, reset, getWholeBoard };
+
+})();  
+
+const displayController = (() => {
+  const gameSquares = document.querySelectorAll(".game-square");
+
+  gameSquares.forEach((square) => {
+    square.addEventListener("click", (e) => {
+      if (gameController.getGameOver() || e.target.textContent !== "") return;
+      gameController.playRound(e.target.dataset.index);
+      console.log(e.target.dataset.index)
+      updateGameBoard()
+      console.log(gameBoard.getWholeBoard());
+    });
+  });
+
+  const updateGameBoard = () => {
+    for (let i = 0; i < gameSquares.length; i++) {
+      gameSquares[i].textContent = gameBoard.getBoard(i);
+    }
+  };
+
+
+})();
+
+const gameController = (() => {
+  const playerX = Player("Player X", "X");
+  const playerO = Player("Player O", "O");
+  let currentPlayer = playerX;
+  let gameOver = false;
+
+  const playRound = (index) => {
+    if (gameOver) return;
+    gameBoard.setBoard(index, currentPlayer.getPlayerSign());
+    changePlayer();
+  }
+
+  const changePlayer = () => {
+    currentPlayer = currentPlayer === playerX ? playerO : playerX;
+  };
+
+  const getGameOver = () => gameOver;
+
+  const getCurrentPlayer = () => currentPlayer;
+
+  return { getGameOver, getCurrentPlayer, playRound };
+})();
