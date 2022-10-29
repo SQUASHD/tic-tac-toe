@@ -37,8 +37,8 @@ const displayController = (() => {
     square.addEventListener("click", (e) => {
       if (gameController.getGameOver() || e.target.textContent !== "") return;
       gameController.playRound(e.target.dataset.index);
-      console.log(e.target.dataset.index)
       updateGameBoard()
+      gameController.checkWinner();
       console.log(gameBoard.getWholeBoard());
     });
   });
@@ -72,5 +72,28 @@ const gameController = (() => {
 
   const getCurrentPlayer = () => currentPlayer;
 
-  return { getGameOver, getCurrentPlayer, playRound };
+  const checkWinner = () => {
+    let winConditions =[
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6]
+    ];
+    winConditions.forEach((condition) => {
+      if (
+        gameBoard.getBoard(condition[0]) === gameBoard.getBoard(condition[1]) &&
+        gameBoard.getBoard(condition[1]) === gameBoard.getBoard(condition[2]) &&
+        gameBoard.getBoard(condition[0]) !== ""
+      ) {
+        gameOver = true;
+        console.log("winner");
+      }
+    });
+  };
+
+  return { getGameOver, getCurrentPlayer, playRound, checkWinner };
 })();
