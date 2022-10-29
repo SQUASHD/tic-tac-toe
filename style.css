@@ -59,7 +59,7 @@ table {
   grid-template-rows: repeat(3, 1fr);
 }
 
-.square {
+.game-square {
   border: 1px solid black;
   font-size: 5em;
   text-align: center;
