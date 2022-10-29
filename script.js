@@ -83,13 +83,13 @@ const displayController = (() => {
   })();
 
 const gameController = (() => {
-  const resetButton = document.querySelector(".reset-button");
-  
   const playerX = Player("Player X", "X");
   const playerO = Player("Player O", "O");
   let currentPlayer = playerX;
   let gameOver = false;
   let winner = null;
+
+  const resetButton = document.querySelector(".reset-button");
 
   const playRound = (index) => {
     if (gameOver) return;
@@ -127,20 +127,22 @@ const gameController = (() => {
         gameOver = true;
         winner = currentPlayer.getName();
       }
-      else if (!gameOver && gameController.checkDraw()) {
+      else if (!gameOver && gameController.setDrawWhenNoWinner()) {
         gameOver = true;
         winner = "draw";
       }
     });
   };
 
-  const checkDraw = () => {
+  const setDrawWhenNoWinner = () => {
     for (let i = 0; i < 9; i++) {
       if (gameBoard.getBoard(i) === "") {
         return false;
       }
     }
+    if (winner === null) {
     return true;
+    };
   };
 
   const resetGame = () => {
@@ -158,7 +160,7 @@ const gameController = (() => {
 
   const getWinner = () => winner 
 
-  return { getGameOver, getCurrentPlayer, playRound, checkDraw, getWinner };
+  return { getGameOver, getCurrentPlayer, playRound, setDrawWhenNoWinner, getWinner };
 })();
 
 window.onload = () => {
