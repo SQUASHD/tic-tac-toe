@@ -38,7 +38,6 @@ const displayController = (() => {
       if (gameController.getGameOver() || e.target.textContent !== "") return;
       gameController.playRound(e.target.dataset.index);
       updateGameBoard()
-      gameController.checkWinner();
       console.log(gameBoard.getWholeBoard());
     });
   });
@@ -57,10 +56,12 @@ const gameController = (() => {
   const playerO = Player("Player O", "O");
   let currentPlayer = playerX;
   let gameOver = false;
+  let winner;
 
   const playRound = (index) => {
     if (gameOver) return;
     gameBoard.setBoard(index, currentPlayer.getPlayerSign());
+    checkWinner()
     changePlayer();
   }
 
@@ -90,10 +91,10 @@ const gameController = (() => {
         gameBoard.getBoard(condition[0]) !== ""
       ) {
         gameOver = true;
-        console.log("winner");
+        winner = currentPlayer;
       }
     });
   };
 
-  return { getGameOver, getCurrentPlayer, playRound, checkWinner };
+  return { getGameOver, getCurrentPlayer, playRound };
 })();
