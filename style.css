@@ -1,10 +1,10 @@
 :root {
-  --primary-dark-one: #0D0D0D;
+  --primary-color: #0D0D0D;
   --primary-dark-two: #737273;
   --primary-color: #544F59;
   --primary-light: #BFBDBE;
 
-  --gameboard-size: 60vh
+  --gameboard-size: clamp(400px, 50vw, 500px);
 }
 
 @font-face {
@@ -71,7 +71,7 @@ body {
 
   display: grid;
   grid-template-columns: 1fr var(--gameboard-size) 1fr;
-  grid-template-rows: 100px 150px 1fr auto;
+  grid-template-rows: 100px 100px 1fr 100px;
 }
 
 .header {
@@ -98,28 +98,56 @@ body {
   align-items: center;
 }
 
-.game-board {
+.game-board-container{
   grid-row: 3 / 4;
   grid-column: 2 / 3;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-board {
+
   height: var(--gameboard-size);
+  width: var(--gameboard-size);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
 
-  border: 2px solid var(--primary-dark-one);
+  border: 2px solid var(--primary-color);
 }
 
 .game-square {
   cursor: pointer;
-  border: 1px solid var(--primary-dark-one);
+  border: 1px solid var(--primary-color);
 
   font-weight: 600;
   font-size: 5em;
   text-align: center;
-  color: var(--primary-dark-one);
+  color: var(--primary-color);
 
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.reset-button-container {
+  grid-row: 4 / 5;
+  grid-column: 2 / 3;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.reset-button {
+  background-color: var(--primary-color);
+  color: white;
+
+  font-size: 2rem;
+  font-weight: 600;
+
+  padding: 10px 20px;
+  border-radius: 14px;
 }
