@@ -59,13 +59,15 @@ const displayController = (() => {
     }
 
     gameDisplay.textContent = message;
-    };
+  };
 
-  return {setMessage};
+  return {setMessage, updateGameBoard};
     
   })();
 
 const gameController = (() => {
+  const resetButton = document.querySelector(".reset-button");
+  
   const playerX = Player("Player X", "X");
   const playerO = Player("Player O", "O");
   let currentPlayer = playerX;
@@ -124,9 +126,22 @@ const gameController = (() => {
     return true;
   };
 
+  const resetGame = () => {
+    gameOver = false;
+    winner = null;
+    currentPlayer = playerX;
+    gameBoard.reset();
+    displayController.updateGameBoard();
+    displayController.setMessage();
+  };
+
+  resetButton.addEventListener("click", () => {
+    resetGame();
+  });
+
   const getWinner = () => winner 
 
-  return { getGameOver, getCurrentPlayer, playRound, getWinner, checkDraw };
+  return { getGameOver, getCurrentPlayer, playRound, checkDraw, getWinner };
 })();
 
 window.onload = () => {
