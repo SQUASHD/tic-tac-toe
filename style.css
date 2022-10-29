@@ -82,7 +82,7 @@ body {
 
   display: grid;
   grid-template-columns: 1fr var(--gameboard-size) 1fr;
-  grid-template-rows: 100px 100px clamp(400, 1fr, var(--gameboard-size)) 100px;
+  grid-template-rows: 100px 50px clamp(400, 1fr, var(--gameboard-size)) 100px;
 }
 
 .header-container {
@@ -143,6 +143,7 @@ body {
 
   font-size: clamp(2rem, 8vw, 3rem);
   color: var(--primary-color);
+  margin: 10px 0;
 
   display: flex;
   justify-content: center;
@@ -194,6 +195,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 10px 0;
 }
 
 .reset-button {
