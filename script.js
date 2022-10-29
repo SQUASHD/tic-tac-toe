@@ -21,24 +21,20 @@ const gameBoard = (() => {
         board[i] = "";
     }    
   }
-  
-  const getWholeBoard = () => {
-    return board;
-  }
 
-  return { getBoard, setBoard, reset, getWholeBoard };
+  return { getBoard, setBoard, reset };
 
 })();  
 
 const displayController = (() => {
   const gameSquares = document.querySelectorAll(".game-square");
+  const gameDisplay = document.querySelector(".game-display");
 
   gameSquares.forEach((square) => {
     square.addEventListener("click", (e) => {
       if (gameController.getGameOver() || e.target.textContent !== "") return;
       gameController.playRound(e.target.dataset.index);
-      updateGameBoard()
-      console.log(gameBoard.getWholeBoard());
+      updateGameBoard();
     });
   });
 
@@ -48,21 +44,36 @@ const displayController = (() => {
     }
   };
 
+  const setMessage = () => {
+    let message;
+    if (gameController.getGameOver()) {
+      message = `${gameController.getWinner()} won!`;
+      console.log(gameController.getWinner());
+    }
+    else{
+      message = `${gameController.getCurrentPlayer().getName()}'s Turn`;
+    }
 
-})();
+    gameDisplay.textContent = message;
+    };
+
+  return {setMessage};
+    
+  })();
 
 const gameController = (() => {
   const playerX = Player("Player X", "X");
   const playerO = Player("Player O", "O");
   let currentPlayer = playerX;
   let gameOver = false;
-  let winner;
+  let winner = null;
 
   const playRound = (index) => {
     if (gameOver) return;
     gameBoard.setBoard(index, currentPlayer.getPlayerSign());
     checkWinner()
-    changePlayer();
+    changePlayer()
+    displayController.setMessage();
   }
 
   const changePlayer = () => {
@@ -91,10 +102,16 @@ const gameController = (() => {
         gameBoard.getBoard(condition[0]) !== ""
       ) {
         gameOver = true;
-        winner = currentPlayer;
+        winner = currentPlayer.getName();
       }
     });
   };
 
-  return { getGameOver, getCurrentPlayer, playRound };
+  const getWinner = () => winner 
+
+  return { getGameOver, getCurrentPlayer, playRound, getWinner };
 })();
+
+window.onload = () => {
+  displayController.setMessage();
+};
