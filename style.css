@@ -8,10 +8,11 @@
   --primary-light-darker: hsl(330, 2%, 70%);
   --primary-light-lighter: #E6E6E6;
 
-  --dark-mode-primary-dark: #010023;
+  --dark-mode-primary-dark: hsl(242, 90%, 5%);
   --dark-mode-primary-lighter: hsl(242, 100%, 12%);
-  --dark-mode-primary-color: #001A35;
+  --dark-mode-primary-color: hsl(242, 90%, 8%);
   --dark-mode-primary-color-lighter: hsl(211, 100%, 15%);
+  --dark-mode-contrast: hsl(240, 10%, 90%);
 
   --gameboard-size: clamp(400px, 50vw, 500px);
 
@@ -219,31 +220,37 @@ body {
   background-color: var(--dark-mode-primary-dark);
 }
 
+.header.dark {
+  color: var(--dark-mode-contrast);
+}
+
+.dark-mode-button.dark,
+.reset-button.dark {
+  background-color: transparent;
+  color: var(--dark-mode-contrast);
+  border: 1px solid var(--dark-mode-contrast);
+}
+
 .dark-mode-button.dark:hover {
-  background-color: var(--dark-mode-primary-color-lighter);
+  background-color: var(--dark-mode-primary-color);
 }
 
 .game-display.dark {
-  color: white;
+  color: var(--dark-mode-contrast);
 }
 
 .game-board.dark {
-  border: 2px solid white;
+  border: 2px solid var(--dark-mode-contrast);
 }
 
 .game-square.dark {
   border: 1px solid white;
-  color: hsl(0, 0%, 90%);
+  color: var(--dark-mode-contrast);
 }
 
 .game-square.dark:hover {
   background-color: var(--dark-mode-primary-color-lighter);
 } 
-
-.reset-button.dark {
-  background-color: transparent;
-  border: 1px solid white;
-}
 
 .reset-button.dark:hover {
   background-color: var(--dark-mode-primary-color-lighter);
