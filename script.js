@@ -30,6 +30,9 @@ const gameBoard = (() => {
 const displayController = (() => {
   const gameSquares = document.querySelectorAll(".game-square");
   const gameDisplay = document.querySelector(".game-display");
+  
+  let darkModeToggled = false;
+  const darkModeButton = document.querySelector(".dark-mode-button");
 
   gameSquares.forEach((square) => {
     square.addEventListener("click", (e) => {
@@ -61,7 +64,21 @@ const displayController = (() => {
     gameDisplay.textContent = message;
   };
 
-  return {setMessage, updateGameBoard};
+  const toggleDarkMode = () => {
+    darkModeToggled = !darkModeToggled
+    const darkModeButton = document.querySelector(".dark-mode-button");
+    const darkToggleableElements = document.querySelectorAll(".dark-mode-toggle");
+    darkToggleableElements.forEach((element) => {
+      element.classList.toggle("dark");
+    });
+    const darkModeButtonContent = darkModeToggled ? "Light Mode" : "Dark Mode";
+    darkModeButton.textContent = darkModeButtonContent
+  };
+
+  darkModeButton.addEventListener("click", toggleDarkMode);
+
+
+  return {setMessage, updateGameBoard, toggleDarkMode};
     
   })();
 
@@ -146,5 +163,10 @@ const gameController = (() => {
 
 window.onload = () => {
   displayController.setMessage();
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+  }
+  else {
+    displayController.toggleDarkMode();
+  }
 };
 
