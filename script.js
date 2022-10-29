@@ -14,7 +14,6 @@ const gameBoard = (() => {
 
   const setBoard = (index, sign) => {
     board[index] = sign;
-    console.log(board)
   }  
 
   const reset = () => {
@@ -55,7 +54,6 @@ const displayController = (() => {
     }
     else if (gameController.getGameOver()) {
       message = `${gameController.getWinner()} won!`;
-      console.log(gameController.getWinner());
     }
     else{
       message = `${gameController.getCurrentPlayer().getName()}'s Turn`;
