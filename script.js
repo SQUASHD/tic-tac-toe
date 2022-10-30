@@ -1,7 +1,9 @@
 
 const Player = (name, playerSign) => {
   const getName = () => name;
+  
   const getPlayerSign = () => playerSign;
+  
   return { getName, getPlayerSign };
 };
 
@@ -10,17 +12,17 @@ const gameBoard = (() => {
   
   const getBoard = (index) => {
     return board[index];
-  }  
+  };
 
   const setBoard = (index, sign) => {
     board[index] = sign;
-  }  
+  };
 
   const reset = () => {
     for (let i = 0; i < board.length; i++) {
         board[i] = "";
-    }    
-  }
+    };
+  };
 
   return { getBoard, setBoard, reset };
 
@@ -44,18 +46,19 @@ const displayController = (() => {
   const updateGameBoard = () => {
     for (let i = 0; i < gameSquares.length; i++) {
       gameSquares[i].textContent = gameBoard.getBoard(i);
-    }
+    };
   };
 
   const setMessage = () => {
     let message;
+
     if (gameController.getWinner() === "draw") {
       message = "It's a draw!";
     }
     else if (gameController.getGameOver()) {
       message = `${gameController.getWinner()} won!`;
     }
-    else{
+    else {
       message = `${gameController.getCurrentPlayer().getName()}'s Turn`;
     }
 
@@ -63,19 +66,19 @@ const displayController = (() => {
   };
 
   const toggleDarkMode = () => {
-    darkModeToggled = !darkModeToggled
     const darkToggleableElements = document.querySelectorAll(".dark-mode-toggle");
     darkToggleableElements.forEach((element) => {
       element.classList.toggle("dark");
     });
+    
+    darkModeToggled = !darkModeToggled;
     const darkModeButtonContent = darkModeToggled ? "Light Mode" : "Dark Mode";
-    darkModeButton.textContent = darkModeButtonContent
+    darkModeButton.textContent = darkModeButtonContent;
   };
 
   darkModeButton.addEventListener("click", toggleDarkMode);
 
-
-  return {setMessage, updateGameBoard, toggleDarkMode};
+  return { setMessage, updateGameBoard, toggleDarkMode };
     
   })();
 
@@ -89,12 +92,11 @@ const gameController = (() => {
   const resetButton = document.querySelector(".reset-button");
 
   const playRound = (index) => {
-    if (gameOver) return;
     gameBoard.setBoard(index, currentPlayer.getPlayerSign());
     checkWinner()
     changePlayer()
     displayController.setMessage();
-  }
+  };
 
   const changePlayer = () => {
     currentPlayer = currentPlayer === playerX ? playerO : playerX;
@@ -115,6 +117,7 @@ const gameController = (() => {
       [0, 4, 8],
       [2, 4, 6]
     ];
+
     winConditions.forEach((condition) => {
       if (
         gameBoard.getBoard(condition[0]) === gameBoard.getBoard(condition[1]) &&
@@ -138,9 +141,11 @@ const gameController = (() => {
       }
     }
     if (winner === null) {
-    return true;
+      return true;
     };
   };
+
+  const getWinner = () => winner 
 
   const resetGame = () => {
     gameOver = false;
@@ -151,11 +156,7 @@ const gameController = (() => {
     displayController.setMessage();
   };
 
-  resetButton.addEventListener("click", () => {
-    resetGame();
-  });
-
-  const getWinner = () => winner 
+  resetButton.addEventListener("click", resetGame);
 
   return { getGameOver, getCurrentPlayer, playRound, setDrawWhenNoWinner, getWinner };
 })();
