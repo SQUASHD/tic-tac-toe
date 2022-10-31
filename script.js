@@ -127,22 +127,20 @@ const gameController = (() => {
         gameOver = true;
         winner = currentPlayer.getName();
       }
-      else if (!gameOver && gameController.setDrawWhenNoWinner()) {
+      else if (!winner && checkBoardFilled()) {
         gameOver = true;
         winner = "draw";
       }
     });
   };
 
-  const setDrawWhenNoWinner = () => {
+  const checkBoardFilled = () => {
     for (let i = 0; i < 9; i++) {
       if (gameBoard.getBoard(i) === "") {
         return false;
       }
     }
-    if (winner === null) {
-      return true;
-    };
+    return true;
   };
 
   const getWinner = () => winner 
@@ -158,7 +156,7 @@ const gameController = (() => {
 
   resetButton.addEventListener("click", resetGame);
 
-  return { getGameOver, getCurrentPlayer, playRound, setDrawWhenNoWinner, getWinner };
+  return { getGameOver, getCurrentPlayer, playRound, getWinner };
 })();
 
 window.onload = () => {
